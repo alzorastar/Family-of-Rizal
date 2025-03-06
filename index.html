@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz on Rizal's Ancestors</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #4A90E2, #50C9C3);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .quiz-container {
+            width: 60%;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .question {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #FF6F61;
+            color: white;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #FF3B2F;
+        }
+        .correct { background-color: green !important; }
+        .wrong { background-color: red !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <p class='question' id='question'></p>
+        <div id='options'></div>
+    </div>
+    
+    <script>
+        const questions = [
+            { q: "Saan ipinanganak si Cirila Bernacha?", options: ["San Pedro Tunasan", "Biñan, Laguna", "Tubigan", "Maynila"], answer: "San Pedro Tunasan" },
+            { q: "Ano ang posisyon na hinawakan ni Juan Mercado sa Biñan, Laguna?", options: ["Gobernadorcillo", "Cabeza de Barangay", "Alcalde Mayor", "Kapitan Heneral"], answer: "Gobernadorcillo" },
+            { q: "Ilan ang anak nina Cirila Alejandro at Juan Mercado?", options: ["13", "10", "7", "15"], answer: "13" },
+            { q: "Ano ang pangalan ng isa sa mga magulang ni Cirila Alejandro?", options: ["Juan Siong-co", "Francisco Mercado", "Jose Ganio", "Juan Bernacha"], answer: "Juan Siong-co" },
+            { q: "Bakit lumipat si Cirila Bernacha sa Biñan, Laguna?", options: ["Maagang naulila kaya tumira sa kamag-anak", "Nag-aral sa isang unibersidad", "Napadpad doon dahil sa negosyo", "Tumakas mula sa giyera"], answer: "Maagang naulila kaya tumira sa kamag-anak" }
+        ];
+        
+        let currentQuestionIndex = 0;
+        const questionElement = document.getElementById("question");
+        const optionsElement = document.getElementById("options");
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                questionElement.textContent = `${currentQuestionIndex + 1}. ${question.q}`;
+                optionsElement.innerHTML = "";
+                question.options.forEach(option => {
+                    const button = document.createElement("button");
+                    button.textContent = option;
+                    button.onclick = () => selectAnswer(button, option, question.answer);
+                    optionsElement.appendChild(button);
+                });
+            } else {
+                questionElement.textContent = "Quiz Completed!";
+                optionsElement.innerHTML = "";
+            }
+        }
+
+        function selectAnswer(button, selected, correct) {
+            if (selected === correct) {
+                button.classList.add("correct");
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }, 1000);
+            } else {
+                button.classList.add("wrong");
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
